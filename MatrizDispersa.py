@@ -18,10 +18,6 @@ class Nodo_Interno(): # Nodos ortogonales
         self.izquierda = None  # self.anterior
 
 
-
-
-
-
 class MatrizDispersa():
     def __init__(self, capa):
         self.capa = capa
