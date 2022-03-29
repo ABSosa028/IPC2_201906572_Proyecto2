@@ -21,7 +21,8 @@ elif(opcion == "2"):
     Rs.mostrar()
     Rs.mostrar2()
 elif(opcion == "3"):
-    print('Misión')
+    print("Misiónes disponibles:")
+    
 elif(opcion == "4"):
     print("Adios")
 
