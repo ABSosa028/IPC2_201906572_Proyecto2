@@ -1,5 +1,5 @@
 from xml.dom import minidom
-from Lectura import Rs, Ml, CI 
+from Lectura import Rs, CI 
 from Lectura import Lectura as Lc
 from MatrizDispersa import MatrizDispersa
 
@@ -19,8 +19,9 @@ if(opcion == "1"):
     CI.mostrar2()
 elif(opcion == "2"):
     Rs.mostrar()
+    Rs.mostrar2()
 elif(opcion == "3"):
-    Ml.mostrar()
+    print('Misión')
 elif(opcion == "4"):
     print("Adios")
 

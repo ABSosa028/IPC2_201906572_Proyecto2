@@ -11,7 +11,7 @@ class Ciudades():
         if(self.cabecera == None):
             self.cabecera = nuevoNodo
             return
-        if(aux.siguiente!=None):
+        while(aux.siguiente!=None):
             aux = aux.siguiente
         aux.siguiente = nuevoNodo
         return

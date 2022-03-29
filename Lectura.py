@@ -1,3 +1,4 @@
+from tkinter import N
 from Robot import Robot as Rb
 from unidadMilitar import milicia as mg
 from milicia import Milicia as Mg
@@ -11,7 +12,6 @@ from MatrizDispersa import MatrizDispersa
 
 
 Rs = Rbs()
-Ml = Mg()
 CI = Cis()
 class Lectura():
     def lecture(nme):
@@ -20,6 +20,7 @@ class Lectura():
         for cuento in configuraciones:
             ListaCiudades = cuento.getElementsByTagName("listaCiudades")
             for ciudad in ListaCiudades:
+                Ml = Mg()
                 Ciudades = ciudad.getElementsByTagName("ciudad")
                 for Ciudad in Ciudades:
                     n = Ciudad.getElementsByTagName("nombre")
@@ -34,6 +35,7 @@ class Lectura():
                         co = unidades.getAttribute("columna")
                         v = unidades.childNodes[0].data
                         newMil = mg(co,f,v)
+
                         Ml.insert(newMil) 
                     coun = 0                                                                                                                    
                     for Fila in rows:
@@ -81,7 +83,9 @@ class Lectura():
                     names = nombree[0].childNodes[0].data
                     tipo = nombree[0].getAttribute("tipo")
                     capacidad = nombree[0].getAttribute("capacidad")
-                    Rn = Rb(cod, names, tipo, capacidad, 1)
-                    Rs.insert(Rn)
-                    #print(names+"  "+capacidad+"   "+tipo)
+                    if capacidad == None or capacidad == "":
+                        capacidad = 0
+                    rbot = Rb(str(cod), names, tipo, str(capacidad), 1)
+                    Rs.insertar(rbot)
                     cod += 1
+

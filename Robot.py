@@ -8,6 +8,9 @@ class Robot():
         self.disponibilidad = disponibilidad
         self.siguiente = None
 
+    def getCapacidad(self):
+        return self.capacidad
+
     def usar(self):
         self.disponibilidad = 0
     
@@ -28,4 +31,7 @@ class Robot():
 
     def devolver(self):
         self.disponibilidad = 1
+    
+    def getTipo(self):
+        return self.tipo
         
