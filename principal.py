@@ -7,3 +7,4 @@ Lc.lecture('entrada.xml')
 aux = CI.cabecera
 while aux != None:
     aux.casillas.graficarDibujo(aux.nombre)
+    aux = aux.siguiente
