@@ -111,7 +111,7 @@ class MatrizDispersa():
         contenido = '''digraph G{
     node[shape=box, width=0.7, height=0.7, fontname="Arial", fillcolor="white", style=filled]
     edge[style = "bold"]
-    node[label = "capa:''' + str(nombre) +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
+    node[label = "''' + str(nombre) +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
         contenido += '''label = "{}" \nfontname="Arial Black" \nfontsize="25pt" \n
                     \n'''.format('\nMATRIZ DISPERSA')
 
@@ -220,7 +220,6 @@ class MatrizDispersa():
             grafo.write(contenido)
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
-        webbrowser.open(result)
 
 
     def graficarDot(self, nombre):
@@ -341,4 +340,3 @@ class MatrizDispersa():
             f.write(grafo)
         result = "matriz_{}.pdf".format(nombre)
         os.system("dot -Tpdf " + dot + " -o " + result)
-        webbrowser.open(result)

@@ -17,8 +17,8 @@ class Lectura():
     def lecture(nme):
         doc = minidom.parse(nme)
         configuraciones = doc.getElementsByTagName("configuracion")
-        for c in configuraciones:
-            ListaCiudades = c.getElementsByTagName("listaCiudades")
+        for cuento in configuraciones:
+            ListaCiudades = cuento.getElementsByTagName("listaCiudades")
             for ciudad in ListaCiudades:
                 Ciudades = ciudad.getElementsByTagName("ciudad")
                 for Ciudad in Ciudades:
@@ -40,11 +40,9 @@ class Lectura():
                         coun+=1
                         Res=str(Fila.childNodes[0].data)
                         Res=Res.replace("\"", "")
-                        print(Res)
                         for unidades in unidadesMil:
                             fc = unidades.getAttribute("fila")
                             coc = unidades.getAttribute("columna")
-                            print(coc, fc)
                             if(int(fc)==coun):
                                 lista = list(Res)
                                 lista[int(coc)-1] = 'M'
@@ -74,7 +72,7 @@ class Lectura():
         
 
                         
-            ListaRobots = c.getElementsByTagName("robots")
+            ListaRobots = cuento.getElementsByTagName("robots")
             for robot in ListaRobots:
                 Robot = robot.getElementsByTagName("robot")
                 cod = 1

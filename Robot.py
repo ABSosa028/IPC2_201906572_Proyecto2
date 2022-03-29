@@ -10,6 +10,21 @@ class Robot():
 
     def usar(self):
         self.disponibilidad = 0
+    
+    def setDisponibilidad(self, disponibilidad):
+        self.disponibilidad = disponibilidad
+    
+    def getDisponibilidad(self):
+        return self.disponibilidad
+    
+    def getCodigo(self):
+        return self.codigo
+
+    def getNombre(self):
+        return self.nombre
+    
+    def getNombreCodigo(self):
+        return self.codigo + " " + self.nombre
 
     def devolver(self):
         self.disponibilidad = 1

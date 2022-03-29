@@ -1,3 +1,5 @@
+import  os, sys
+from PIL import Image
 
 class Ciudad():
     def __init__(self, nombre, filas, columnas, casillas, militares):
@@ -8,5 +10,9 @@ class Ciudad():
         self.militares =militares
         self.siguiente = None
 
-    def fil(self):
+    def getfil(self):
         return self.filas
+
+    def getnombre(self):
+        return self.nombre
+        
