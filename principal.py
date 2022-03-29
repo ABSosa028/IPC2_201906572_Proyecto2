@@ -30,6 +30,10 @@ while(opcion != 4):
         ciudadSelect = CI.buscarNodo(ciudad)
         print('Ciudad seleccionada:\n\t'+str(ciudadSelect.getnombre()))
         ciudadSelect.mostrar()
+        ciudadSelect.mostrarM()
+        print("\n")
+        print("Robots disponibles:")
+
     elif(opcion == "4"):
         print("Adios")
         break

@@ -70,3 +70,12 @@ class Robots():
             print(aux.getNombreCodigo())
             aux = aux.siguiente
         return
+    
+    def enliztar(self):
+        yy= 0
+        aux = self.cabecera
+        while aux != None:
+            print('{}  {}  {}'.format(yy,aux.nombre,aux.tipo))
+            aux = aux.siguiente
+            yy+=1
+        return
