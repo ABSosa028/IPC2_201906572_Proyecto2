@@ -102,6 +102,13 @@ class MatrizDispersa():
 
         ##------ Fin de insercion
 
+    
+    
+
+
+
+    
+
 
     def graficarDibujo(self,nombre):
         contenido = '''digraph G{
@@ -109,7 +116,9 @@ class MatrizDispersa():
     edge[style = "bold"]
     node[label = "''' + str(nombre) +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
         contenido += '''label = "{}" \nfontname="Arial Black" \nfontsize="25pt" \n
-                    \n'''.format('\nMATRIZ DISPERSA')
+                    \n'''.format('\nMATRIZ '+str(nombre).upper())
+                    
+
 
         # --graficar nodos ENCABEZADO
         # --graficar nodos fila

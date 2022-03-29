@@ -67,7 +67,7 @@ class Lectura():
                                     c+=1
                                     matriz.insert(l,c,col)
                             c=0
-                            matriz.graficarDibujo('ciudadGotica')
+                            matriz.graficarDibujo(name)
                     
                     newCiudad = Ci(name,filas,columnas,matriz, Ml)
                     CI.insertar(newCiudad)

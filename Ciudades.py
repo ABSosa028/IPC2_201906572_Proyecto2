@@ -6,6 +6,17 @@ class Ciudades():
     def __init__(self):
         self.cabecera = None
 
+    def buscarNodo(self, id):
+        yy = 0
+        aux = self.cabecera
+        while aux != None:
+            if(yy == int(id)):
+                return aux
+            aux = aux.siguiente
+            yy = yy + 1
+        return None
+
+
     def insertar(self, nuevoNodo):
         aux = self.cabecera
         if(self.cabecera == None):
@@ -52,4 +63,13 @@ class Ciudades():
         while aux != None:
             print(aux.nombre)
             aux = aux.siguiente
+        return
+
+    def enliztar(self):
+        yy= 0
+        aux = self.cabecera
+        while aux != None:
+            print(str(yy)+" "+aux.nombre)
+            aux = aux.siguiente
+            yy+=1
         return
