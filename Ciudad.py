@@ -1,6 +1,7 @@
 import  os, sys
 import webbrowser
 from PIL import Image
+from Mision import Mision, ListaMisiones
 
 class Ciudad():
     def __init__(self, nombre, filas, columnas, casillas, militares):
@@ -19,6 +20,7 @@ class Ciudad():
 
     #mostrar las posiciones de un archivo txt que contengan M
     def mostrarM(self):
+        Misiones = ListaMisiones()
         file = open("{}.txt".format(self.nombre), "r")
         fila = 1
         nMision = 0
@@ -28,17 +30,24 @@ class Ciudad():
                 if letra == "C":
                     nMision += 1 
                     print("{}. Mision de Rescate a Civiles        Fila: {} Columna: {}".format(nMision, fila, columna))
+                    Mis = Mision(letra, fila, columna)
+                    Misiones.insertar(Mis)
                 elif letra == "R":
                     nMision += 1 
                     print("{}. Mision de Extraccion de Recursos   Fila: {} Columna: {}".format(nMision, fila, columna))
-                elif letra == "M":
-                    nMision += 1 
-                    print("{}. Mision de Quitar Militares         Fila: {} Columna: {}".format(nMision, fila, columna))
-
+                    Mis = Mision(letra, fila, columna)
+                    Misiones.insertar(Mis)
                 columna = columna + 1
             fila = fila + 1
+        file.close()
+        return Misiones
                 
- 
+    #def RescueMision(self, Robot, Mision):
+        
+        
+        
+
+
 
     def getnombre(self):
         return self.nombre

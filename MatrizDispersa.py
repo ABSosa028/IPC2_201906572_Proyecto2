@@ -345,3 +345,7 @@ class MatrizDispersa():
             f.write(grafo)
         result = "matriz_{}.pdf".format(nombre)
         os.system("dot -Tpdf " + dot + " -o " + result)
+
+    def entradas(self):
+        
+        return self.entradas
