@@ -33,14 +33,13 @@ class MatrizDispersa():
                 auxi = aux
                 while auxi != None:
                     if( auxi.caracter == 'C'):
-                        print('mision de rescate a civiles', end = "")
+                        print('mision de rescate a civiles')
                         print('coordenadas x:', auxi.coordenadaX, 'y:', auxi.coordenadaY)
                     elif( auxi.caracter == 'R'):
-                        print('mision de obtencion de recursos', end = "")
+                        print('mision de obtencion de recursos')
                         print('coordenadas x:', auxi.coordenadaX, 'y:', auxi.coordenadaY)
                     auxi = auxi.derecha
                 aux = aux.abajo
-                print("")
 
     # (filas = x, columnas = y)
     def insert(self, pos_x, pos_y, caracter):
