@@ -4,3 +4,6 @@ class Nodo_Encabezado():
         self.siguiente = None
         self.anterior = None
         self.acceso = None 
+    
+    
+    

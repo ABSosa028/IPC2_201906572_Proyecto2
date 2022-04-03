@@ -1,12 +1,11 @@
 #nodo mision con tipo mision y coordenadas
-from this import d
+#from this import d
 
 
 class Mision:
-    def __init__(self,tipo,x,y):
+    def __init__(self,tipo,nodoMis):
         self.tipo = tipo 
-        self.x = x 
-        self.y = y 
+        self.nodoMis = nodoMis
         self.siguiente = None
 
     def coordenadas(self): 

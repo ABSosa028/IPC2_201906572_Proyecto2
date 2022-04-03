@@ -17,12 +17,22 @@ class Nodo_Interno(): # Nodos ortogonales
         self.derecha = None  # self.siguiente
         self.izquierda = None  # self.anterior
 
-
 class MatrizDispersa():
     def __init__(self, capa):
         self.capa = capa
         self.filas = Lista_Encabezado('fila')
         self.columnas = Lista_Encabezado('columna')
+
+    def MostrarMat(self):
+        if self.filas.primero.acceso != None:
+            aux = self.filas.primero.acceso
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    auxi.Mostrar()
+                    auxi = auxi.siguiente
+                aux = aux.abajo
+                print("")
 
     # (filas = x, columnas = y)
     def insert(self, pos_x, pos_y, caracter):
@@ -102,9 +112,7 @@ class MatrizDispersa():
 
         ##------ Fin de insercion
 
-    
-    
-
+  
 
 
     

@@ -9,6 +9,7 @@ class Lista_Encabezado():
         self.tipo=tipo
         self.size=0
 
+    
     def insertar_nodoEncabezado(self, nuevo):
         self.size +=1
         if self.primero==None:

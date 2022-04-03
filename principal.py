@@ -29,8 +29,7 @@ while(opcion != 4):
         ciudad = input("Seleccione el numero de ciudad para ver sus misiones: \n")
         ciudadSelect = CI.buscarNodo(ciudad)
         print('Ciudad seleccionada:\n\t'+str(ciudadSelect.getnombre()))
-        ciudadSelect.mostrar()
-        ciudadSelect.mostrarM()
+        ciudadSelect.casillas.mostrar()
         print("\n")
         print("Robots disponibles:")
 

@@ -17,3 +17,5 @@ class Cuadro():
     
     def setDato(self,dato):
         self.dato = dato
+
+    
