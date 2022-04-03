@@ -17,6 +17,9 @@ class Nodo_Interno(): # Nodos ortogonales
         self.derecha = None  # self.siguiente
         self.izquierda = None  # self.anterior
 
+    def Mostrar(self):
+        print(str(self.caracter), end = "")
+
 class MatrizDispersa():
     def __init__(self, capa):
         self.capa = capa
@@ -29,8 +32,13 @@ class MatrizDispersa():
             while aux != None:
                 auxi = aux
                 while auxi != None:
-                    auxi.Mostrar()
-                    auxi = auxi.siguiente
+                    if( auxi.caracter == 'C'):
+                        print('mision de rescate a civiles', end = "")
+                        print('coordenadas x:', auxi.coordenadaX, 'y:', auxi.coordenadaY)
+                    elif( auxi.caracter == 'R'):
+                        print('mision de obtencion de recursos', end = "")
+                        print('coordenadas x:', auxi.coordenadaX, 'y:', auxi.coordenadaY)
+                    auxi = auxi.derecha
                 aux = aux.abajo
                 print("")
 
