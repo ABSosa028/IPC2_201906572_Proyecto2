@@ -3,6 +3,8 @@ from Nodo_Encabezado import Nodo_Encabezado
 from Lista_Encabezado import Lista_Encabezado
 import os
 import webbrowser
+from Mision import ListaMisiones as Misiones
+from Mision import Mision as ms
 
 # -----------------------------Codigo de MATRIZ DISPERSA ----------------
 # -------- Clase NodoOrtogonal, con 4 apuntadores -> Nodos Internos
@@ -27,19 +29,24 @@ class MatrizDispersa():
         self.columnas = Lista_Encabezado('columna')
 
     def MostrarMat(self):
+        MisionesDisponibles = Misiones()
+        contador_mis = 1
         if self.filas.primero.acceso != None:
             aux = self.filas.primero.acceso
             while aux != None:
                 auxi = aux
                 while auxi != None:
                     if( auxi.caracter == 'C'):
-                        print('mision de rescate a civiles')
-                        print('coordenadas x:', auxi.coordenadaX, 'y:', auxi.coordenadaY)
+                        nuevaMis = ms(contador_mis, auxi.caracter, auxi)
+                        contador_mis += 1
+                        MisionesDisponibles.insertar(nuevaMis)
                     elif( auxi.caracter == 'R'):
-                        print('mision de obtencion de recursos')
-                        print('coordenadas x:', auxi.coordenadaX, 'y:', auxi.coordenadaY)
+                        nuevaMis = ms(contador_mis, auxi.caracter, auxi)
+                        contador_mis += 1
+                        MisionesDisponibles.insertar(nuevaMis)
                     auxi = auxi.derecha
                 aux = aux.abajo
+            return MisionesDisponibles
 
     # (filas = x, columnas = y)
     def insert(self, pos_x, pos_y, caracter):

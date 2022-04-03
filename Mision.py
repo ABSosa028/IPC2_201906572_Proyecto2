@@ -3,7 +3,8 @@
 
 
 class Mision:
-    def __init__(self,tipo,nodoMis):
+    def __init__(self, cod, tipo, nodoMis):
+        self.cod = cod
         self.tipo = tipo 
         self.nodoMis = nodoMis
         self.siguiente = None
