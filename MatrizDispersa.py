@@ -28,7 +28,7 @@ class MatrizDispersa():
         self.filas = Lista_Encabezado('fila')
         self.columnas = Lista_Encabezado('columna')
 
-    def MostrarMat(self):
+    def MostrarMisiones(self):
         MisionesDisponibles = Misiones()
         contador_mis = 1
         if self.filas.primero.acceso != None:

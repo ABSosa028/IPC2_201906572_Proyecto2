@@ -28,10 +28,23 @@ while(opcion != 4):
         CI.mostrar2()
         ciudad = input("Seleccione el numero de ciudad para ver sus misiones: \n")
         ciudadSelect = CI.buscarNodo(ciudad)
+        print('------------------------------------------------------')
         print('Ciudad seleccionada:\n\t'+str(ciudadSelect.getnombre()))
-        ciudadSelect.casillas.MostrarMat()
+        print('------------------------------------------------------')
+        misiones = ciudadSelect.casillas.MostrarMisiones()
+        misiones.mostrar()
+        mselect = input("Seleccione una mision: \n")
+        mision = misiones.buscarNodo(int(mselect))
+        print('------------------------------------------------------------------')
+        print('Mision seleccionada:\n\t'+str(ciudadSelect.getnombre()))
+        mision.mostrar()
+        print('------------------------------------------------------------------')
         print("\n")
-        print("Robots disponibles:")
+        print('------------------------------------------------------------------')
+        print("Robots disponibles para esta mision:")
+
+        print('------------------------------------------------------------------')
+
 
     elif(opcion == "4"):
         print("Adios")
