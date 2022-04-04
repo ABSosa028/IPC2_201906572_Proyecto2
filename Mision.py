@@ -9,6 +9,9 @@ class Mision:
         self.nodoMis = nodoMis
         self.siguiente = None
 
+    def gettipo(self):
+        return self.tipo
+
     def coordenadas(self): 
         return self.x,self.y
 

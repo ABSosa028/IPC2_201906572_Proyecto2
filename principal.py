@@ -42,9 +42,11 @@ while(opcion != 4):
         print("\n")
         print('------------------------------------------------------------------')
         print("Robots disponibles para esta mision:")
-
+        tipoMis = mision.gettipo()
+        Rs.enliztar(tipoMis)
         print('------------------------------------------------------------------')
-
+        opR = input("Seleccione un robot por su id: \n")
+        robot = Rs.buscarNodo(int(opR))
 
     elif(opcion == "4"):
         print("Adios")

@@ -6,6 +6,8 @@ class Robots():
     def __init__(self) :
         self.primero = None
 
+    
+
     def insertar(self, nuevoNodo):
         aux = self.primero
         if(self.primero == None):
@@ -16,6 +18,13 @@ class Robots():
         aux.siguiente = nuevoNodo
         return  
 
+    def buscarNodo(self, x):
+        aux = self.primero
+        while aux != None:
+            if aux.codigo == x:
+                return aux
+            aux = aux.siguiente
+        return None
 
     def mostrar2(self):
         file = open("Reporte.dot","w")
@@ -71,11 +80,14 @@ class Robots():
             aux = aux.siguiente
         return
     
-    def enliztar(self):
-        yy= 0
-        aux = self.cabecera
+    def enliztar(self, tp):
+        if(tp=='C'):
+            tp = 'ChapinRescue'
+        elif(tp == 'R'):
+            tp = 'ChapinFighter'
+        aux = self.primero
         while aux != None:
-            print('{}  {}  {}'.format(yy,aux.nombre,aux.tipo))
+            if(aux.getTipo() == tp):
+                print('id:{}  {}  {}'.format(aux.codigo,aux.nombre,aux.tipo))
             aux = aux.siguiente
-            yy+=1
         return
