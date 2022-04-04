@@ -23,6 +23,11 @@ class Mision:
         print("{} {} {}".format(self.cod, self.tipo, a))
         return
     
+    def mor(self):
+        a = ("Entrada Seleccionada        Fila: {} Columna: {}".format(self.nodoMis.coordenadaX, self.nodoMis.coordenadaY))
+        x = ("{} {} {}".format(self.cod, self.tipo, a))
+        return x
+    
 
 #lista de misiones
 class ListaMisiones:
@@ -51,6 +56,15 @@ class ListaMisiones:
             aux = aux.siguiente
         return
 
+    def mostrarE(self):
+        aux = self.primero
+        while aux != None:
+            if(aux.tipo == "E"):
+                a = ("EntradaDisponible        Fila: {} Columna: {}".format(aux.nodoMis.coordenadaX, aux.nodoMis.coordenadaY))
+            print("{} {} {}".format(aux.cod, aux.tipo, a))
+            aux = aux.siguiente
+        return
+
     def buscarNodo(self,x):
         aux = self.primero
         while aux != None:
@@ -58,3 +72,4 @@ class ListaMisiones:
                 return aux
             aux = aux.siguiente
         return None
+

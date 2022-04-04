@@ -6,7 +6,6 @@ class Robots():
     def __init__(self) :
         self.primero = None
 
-    
 
     def insertar(self, nuevoNodo):
         aux = self.primero

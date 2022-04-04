@@ -2,6 +2,7 @@ from sys import maxunicode
 from Nodo_Encabezado import Nodo_Encabezado
 from Lista_Encabezado import Lista_Encabezado
 import os
+import random
 import webbrowser
 from Mision import ListaMisiones as Misiones
 from Mision import Mision as ms
@@ -21,12 +22,26 @@ class Nodo_Interno(): # Nodos ortogonales
 
     def Mostrar(self):
         print(str(self.caracter), end = "")
+    
+    def setCaracter(self, caracter):
+        self.caracter = caracter
 
 class MatrizDispersa():
     def __init__(self, capa):
         self.capa = capa
         self.filas = Lista_Encabezado('fila')
         self.columnas = Lista_Encabezado('columna')
+
+    def MostrarMat(self):
+        if self.inicio != None:
+            aux = self.inicio
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    auxi.Mostrar()
+                    auxi = auxi.derecha
+                aux = aux.abajo
+                print("")
 
     def MostrarMisiones(self):
         MisionesDisponibles = Misiones()
@@ -48,7 +63,145 @@ class MatrizDispersa():
                 aux = aux.abajo
             return MisionesDisponibles
 
-    # (filas = x, columnas = y)
+    def MostrarEntradas(self):
+        EntradasDisponibles = Misiones()
+        cont_entradas = 1
+        if self.filas.primero.acceso != None:
+            aux = self.filas.primero.acceso
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    if( auxi.caracter == 'E'):
+                        nuevaEntr = ms(cont_entradas, auxi.caracter, auxi)
+                        cont_entradas += 1
+                        EntradasDisponibles.insertar(nuevaEntr)
+                    auxi = auxi.derecha
+                aux = aux.abajo
+            return EntradasDisponibles
+
+    def mderecha(self, nodo):
+        nodo.derecha.setCaracter('W')
+        return 
+    
+    def mizquierda(self, nodo):
+        nodo.izquierda.setCaracter('W')
+        return
+
+    def mabajo(self, nodo):
+        nodo.abajo.setCaracter('W')
+        return
+    
+    def marriba(self, nodo):
+        nodo.arriba.setCaracter('W')
+        return
+    
+    def rderecha(self, nodo):
+        nodo.setCaracter(' ')
+        return
+    
+    def rizquierda(self, nodo):
+        nodo.setCaracter(' ')
+        return
+    
+    def rarriba(self, nodo):
+        nodo.setCaracter(' ')
+        return
+    
+    def rabajo(self, nodo):
+        nodo.setCaracter(' ')
+        return
+
+    #buscar camino matriz ortogonal
+    def buscarCaminoRescate(self, inicio, fin):
+        aux = inicio
+        muvs = ['e']
+        while(inicio.coordenadaX != fin.coordenadaX and inicio.coordenadaY != fin.coordenadaY):
+            numero = int(random.randint(1, 4))
+            print(numero)
+            #intentar muv
+            if(aux.derecha != None ):
+                if( aux.derecha.caracter == ' ' and numero ==1):
+                    aux = aux.derecha
+                    if(muvs[-1]!= 'l'):
+                        self.mderecha(aux)
+                        muvs.append('r')
+                    else:
+                        muvs.pop()
+                        self.rderecha(aux)
+            elif(aux.arriba != None):
+                if( aux.arriba.caracter == ' ' and numero ==2):
+                    if(muvs[-1]!= 'd'):
+                        muvs.append('u')
+                        self.marriba(aux)
+                        aux = aux.arriba
+                    else:
+                        muvs.pop()
+                        self.rarriba(aux)
+            elif(aux.abajo != None ):
+                if( aux.abajo.caracter == ' ' and numero ==3):
+                    aux = aux.abajo
+                    if(muvs[-1]!= 'u'):
+                        self.mabajo(aux)
+                        muvs.append('d')
+                    else:
+                        muvs.pop()
+                        self.rabajo(aux)
+            elif(aux.izquierda != None):
+                 if( aux.izquierda.caracter == ' ' and numero ==4):
+                    aux = aux.izquierda
+                    if(muvs[-1]!= 'r'):
+                        muvs.append('l')
+                        self.mizquierda(aux)
+                    else:
+                        muvs.pop()
+                        self.rizquierda(aux)
+            elif(aux.derecha != None):
+                if(aux.derecha.caracter == 'W' and numero ==1):
+                    aux = aux.derecha
+                    if(muvs[-1]!= 'l'):
+                        self.mderecha(aux)
+                        muvs.append('r')
+                    else:
+                        muvs.pop()
+                        self.rderecha(aux)
+            elif(aux.arriba != None):
+                if(aux.arriba.caracter == 'W' and numero ==2):
+                    aux = aux.arriba
+                    if(muvs[-1]!= 'd'):
+                        muvs.append('u')
+                        self.marriba(aux)
+                    else:
+                        muvs.pop()
+                        self.rarriba(aux)
+            elif(aux.abajo != None):
+                if(aux.abajo.caracter == 'W' and numero ==3):
+                    aux = aux.abajo
+                    if(muvs[-1]!= 'u'):
+                        self.mabajo(aux)
+                        muvs.append('d')
+                    else:
+                        muvs.pop()
+                        self.rabajo(aux)
+            elif(aux.izquierda != None):
+                if(aux.izquierda.caracter == 'W' and numero ==4):
+                    aux = aux.izquierda
+                    if(muvs[-1]!= 'r'):
+                        muvs.append('l')
+                        self.mizquierda(aux)
+                    else:
+                        muvs.pop()
+                        self.rizquierda(aux)
+            print(muvs)
+
+    def RealizarMision(self,NI,NF):
+        if self.filas.primero.acceso != None:
+            aux = self.filas.primero.acceso
+            while aux != None:
+                auxi = aux
+                while auxi != None:
+                    aux = aux.abajo
+            return 
+
     def insert(self, pos_x, pos_y, caracter):
         nuevo = Nodo_Interno(pos_x, pos_y, caracter) # se crea nodo interno
         # --- lo prinero sera buscar si ya existen los encabezados en la matriz
@@ -123,14 +276,6 @@ class MatrizDispersa():
                             break
                         else:
                             tmp2 = tmp2.abajo
-
-        ##------ Fin de insercion
-
-  
-
-
-    
-
 
     def graficarDibujo(self,nombre):
         contenido = '''digraph G{
@@ -247,7 +392,6 @@ class MatrizDispersa():
             grafo.write(contenido)
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
-
 
     def graficarDot(self, nombre):
         #-- lo primero es settear los valores que nos preocupan
@@ -367,7 +511,3 @@ class MatrizDispersa():
             f.write(grafo)
         result = "matriz_{}.pdf".format(nombre)
         os.system("dot -Tpdf " + dot + " -o " + result)
-
-    def entradas(self):
-        
-        return self.entradas
