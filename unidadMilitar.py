@@ -6,3 +6,6 @@ class milicia():
         self.values = values
         self.siguiente = None
     
+    def getPoder(self):
+        return self.values
+    

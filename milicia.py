@@ -15,5 +15,13 @@ class Milicia():
         aux.siguiente = military
         return
     
+    def buscarNodo(self, x, y):
+        aux = self.primero
+        while aux != None:
+            if aux.positionx == x and aux.positiony == y:
+                return aux
+            aux = aux.siguiente
+        return None
+    
     
 

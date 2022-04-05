@@ -102,9 +102,15 @@ while(opcion != 4):
         print(entrada.mor())
         print('------------------------------------------------------------------')
         print("\n")
-        #load_animation('comenzando mision: ',mision.mor().lower())
-        #load_animation('mision completada: ','cargando datos')
-        ciudadSelect.casillas.buscarCaminoRescate(entrada.nodoMis,mision.nodoMis)
+        load_animation('comenzando mision: ',mision.mor().lower())
+        load_animation('mision completada: ','cargando datos')
+        print(mision.nodoMis.getCaracter())
+        if(str(mision.nodoMis.getCaracter())=='C'):
+            ciudadSelect.casillas.buscarCaminoRescate(entrada.nodoMis,mision.nodoMis)
+            ciudadSelect.casillas.graficarRecorrido('Mision_Completada')
+            ciudadSelect.casillas.quitarW()
+        else:
+            print('nel')
 
     elif(opcion == "4"):
         print("Adios")

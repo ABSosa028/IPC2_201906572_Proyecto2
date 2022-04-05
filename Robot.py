@@ -8,8 +8,11 @@ class Robot():
         self.disponibilidad = disponibilidad
         self.siguiente = None
 
-    def getCapacidad(self):
+    def getPoder(self):
         return self.capacidad
+    
+    def setPoder(self, poder):
+        self.capacidad = poder
 
     def usar(self):
         self.disponibilidad = 0

@@ -1,3 +1,4 @@
+import re
 from sys import maxunicode
 from Nodo_Encabezado import Nodo_Encabezado
 from Lista_Encabezado import Lista_Encabezado
@@ -23,6 +24,9 @@ class Nodo_Interno(): # Nodos ortogonales
     def Mostrar(self):
         print(str(self.caracter), end = "")
     
+    def getCaracter(self):
+        return self.caracter
+
     def setCaracter(self, caracter):
         self.caracter = caracter
 
@@ -80,128 +84,223 @@ class MatrizDispersa():
             return EntradasDisponibles
 
     def mderecha(self, nodo):
-        nodo.derecha.setCaracter('W')
+        if(nodo.derecha.caracter != 'E'):
+            nodo.derecha.setCaracter('W')
         return 
     
     def mizquierda(self, nodo):
-        nodo.izquierda.setCaracter('W')
+        if(nodo.izquierda.caracter != 'E'):
+
+            nodo.izquierda.setCaracter('W')
         return
 
     def mabajo(self, nodo):
-        nodo.abajo.setCaracter('W')
+        if(nodo.abajo.caracter != 'E'):
+            nodo.abajo.setCaracter('W')
         return
     
     def marriba(self, nodo):
-        nodo.arriba.setCaracter('W')
+        if(nodo.arriba.caracter != 'E'):
+            nodo.arriba.setCaracter('W')
         return
     
     def rderecha(self, nodo):
-        nodo.setCaracter(' ')
+        if(nodo.caracter != 'E'):
+            nodo.setCaracter(' ')
         return
     
     def rizquierda(self, nodo):
-        nodo.setCaracter(' ')
+        if(nodo.derecha.caracter != 'E'):
+            nodo.setCaracter(' ')
         return
     
     def rarriba(self, nodo):
-        nodo.setCaracter(' ')
+        if(nodo.caracter != 'E'):
+            nodo.setCaracter(' ')
         return
     
     def rabajo(self, nodo):
-        nodo.setCaracter(' ')
+        if(nodo.caracter != 'E'):
+            nodo.setCaracter(' ')   
         return
 
     #buscar camino matriz ortogonal
     def buscarCaminoRescate(self, inicio, fin):
         aux = inicio
         muvs = ['e']
+        pas = ['E',' ','C','']
+        hec = []
+        contInt = 0
         while(inicio.coordenadaX != fin.coordenadaX and inicio.coordenadaY != fin.coordenadaY):
             numero = int(random.randint(1, 4))
             print(numero)
             #intentar muv
-            if(aux.derecha != None ):
-                if( aux.derecha.caracter == ' ' and numero ==1):
+            
+            if(aux.derecha != None and numero ==1 ):
+                if( aux.derecha.caracter in pas):
+                    self.mderecha(aux)
+                    muvs.append('r')
                     aux = aux.derecha
-                    if(muvs[-1]!= 'l'):
-                        self.mderecha(aux)
-                        muvs.append('r')
-                    else:
-                        muvs.pop()
-                        self.rderecha(aux)
-            elif(aux.arriba != None):
-                if( aux.arriba.caracter == ' ' and numero ==2):
-                    if(muvs[-1]!= 'd'):
-                        muvs.append('u')
-                        self.marriba(aux)
-                        aux = aux.arriba
-                    else:
-                        muvs.pop()
-                        self.rarriba(aux)
-            elif(aux.abajo != None ):
-                if( aux.abajo.caracter == ' ' and numero ==3):
-                    aux = aux.abajo
-                    if(muvs[-1]!= 'u'):
-                        self.mabajo(aux)
-                        muvs.append('d')
-                    else:
-                        muvs.pop()
-                        self.rabajo(aux)
-            elif(aux.izquierda != None):
-                 if( aux.izquierda.caracter == ' ' and numero ==4):
-                    aux = aux.izquierda
-                    if(muvs[-1]!= 'r'):
-                        muvs.append('l')
-                        self.mizquierda(aux)
-                    else:
-                        muvs.pop()
-                        self.rizquierda(aux)
-            elif(aux.derecha != None):
-                if(aux.derecha.caracter == 'W' and numero ==1):
-                    aux = aux.derecha
-                    if(muvs[-1]!= 'l'):
-                        self.mderecha(aux)
-                        muvs.append('r')
-                    else:
-                        muvs.pop()
-                        self.rderecha(aux)
-            elif(aux.arriba != None):
-                if(aux.arriba.caracter == 'W' and numero ==2):
+                    hec = []
+                else:
+                    hec.append('r')
+            elif(aux.arriba != None and numero ==2):
+                if( aux.arriba.caracter in pas ):
+                    muvs.append('u')
+                    self.marriba(aux)
+                    hec = []
                     aux = aux.arriba
-                    if(muvs[-1]!= 'd'):
-                        muvs.append('u')
-                        self.marriba(aux)
-                    else:
-                        muvs.pop()
-                        self.rarriba(aux)
-            elif(aux.abajo != None):
-                if(aux.abajo.caracter == 'W' and numero ==3):
+                else:
+                    hec.append('u')
+            elif(aux.abajo != None and numero ==3):
+                if( aux.abajo.caracter in pas ):
+                    self.mabajo(aux)
+                    hec = []
                     aux = aux.abajo
-                    if(muvs[-1]!= 'u'):
-                        self.mabajo(aux)
-                        muvs.append('d')
-                    else:
-                        muvs.pop()
-                        self.rabajo(aux)
-            elif(aux.izquierda != None):
-                if(aux.izquierda.caracter == 'W' and numero ==4):
-                    aux = aux.izquierda
-                    if(muvs[-1]!= 'r'):
-                        muvs.append('l')
-                        self.mizquierda(aux)
-                    else:
-                        muvs.pop()
-                        self.rizquierda(aux)
+                    muvs.append('d')
+                else:
+                    hec.append('d') 
+            elif(aux.izquierda != None and numero ==4):
+                if( aux.izquierda.caracter in pas ):
+                    muvs.append('l')
+                    hec = []
+                    self.mizquierda(aux)
+                else:
+                    hec.append('l')
+            if(aux.abajo == None or aux.arriba == None or aux.derecha == None or aux.izquierda == None):
+                if('l' in hec and 'r' in hec and 'd' in hec and aux.arriba == None):
+                    hec.append('u')
+                if('l' in hec and 'r' in hec and 'u' in hec and aux.abajo == None):
+                    hec.append('d')
+                if('u' in hec and 'r' in hec and 'd' in hec and aux.derecha == None):
+                    hec.append('l')
+                if('l' in hec and 'u' in hec and 'd' in hec and aux.izquierda == None):
+                    hec.append('r')
+            if('l' in hec and 'r' in hec and 'u' in hec and 'd' in hec):
+                contInt +=1
+                aux = inicio
+                muvs = ['e']
+                if self.filas.primero.acceso != None:
+                    auxo = self.filas.primero.acceso
+                    while auxo != None:
+                        auxi = auxo
+                        while auxi != None:
+                            if(auxi.caracter == 'W'):
+                                auxi.setCaracter(' ')
+                                print('borrando')
+                            auxi = auxi.derecha
+                        auxo = auxo.abajo    
+                hec = []
+            if(aux.abajo == fin or aux.arriba == fin or aux.derecha == fin or aux.izquierda == fin):
+                print('--------------------------------------------------------------------------------')
+                print('De locos llegamos a la meta')
+                print(muvs)
+                print('--------------------------------------------------------------------------------')
+                return 
+            if(contInt > 100):
+                print('--------------------------------------------------------------------------------')
+                print('Mision no posible')
+                print(muvs)
+                print('--------------------------------------------------------------------------------')
+                return
             print(muvs)
-
-    def RealizarMision(self,NI,NF):
-        if self.filas.primero.acceso != None:
-            aux = self.filas.primero.acceso
-            while aux != None:
-                auxi = aux
-                while auxi != None:
+            print(hec)
+        
+    def buscarCaminoRecurso(self, inicio, fin, robot, milisia):
+        aux = inicio
+        muvs = ['e']
+        pas = ['E',' ','C','M']
+        hec = []
+        while(inicio.coordenadaX != fin.coordenadaX and inicio.coordenadaY != fin.coordenadaY):
+            numero = int(random.randint(1, 4))
+            print(numero)
+            #intentar muv
+            
+            if(aux.derecha != None and numero ==1 ):
+                if( aux.derecha.caracter in pas):
+                    if(aux.derecha.caracter == 'M'):
+                        f = milisia.buscarNodo(aux.derecha.getCoordenadaX(), aux.derecha.getCoordenadaY())
+                        if(f != None):
+                            if(int(f.getPoder) < int(robot.getPoder())):
+                                nP=int(robot.getPoder)-int(f.getPoder)
+                                f.setPoder(nP)
+                                self.mderecha(aux)
+                                muvs.append('r')
+                                aux = aux.derecha
+                                hec = []
+                    self.mderecha(aux)
+                    muvs.append('r')
+                    aux = aux.derecha
+                    hec = []
+                else:
+                    hec.append('r')
+            elif(aux.arriba != None and numero ==2):
+                if( aux.arriba.caracter in pas ):
+                    muvs.append('u')
+                    self.marriba(aux)
+                    hec = []
+                    aux = aux.arriba
+                else:
+                    hec.append('u')
+            elif(aux.abajo != None and numero ==3):
+                if( aux.abajo.caracter in pas ):
+                    self.mabajo(aux)
+                    hec = []
                     aux = aux.abajo
-            return 
-
+                    muvs.append('d')
+                else:
+                    hec.append('d') 
+            elif(aux.izquierda != None and numero ==4):
+                if( aux.izquierda.caracter in pas ):
+                    muvs.append('l')
+                    hec = []
+                    self.mizquierda(aux)
+                else:
+                    hec.append('l')
+            if(aux.abajo == None or aux.arriba == None or aux.derecha == None or aux.izquierda == None):
+                if('l' in hec and 'r' in hec and 'd' in hec and aux.arriba == None):
+                    hec.append('u')
+                if('l' in hec and 'r' in hec and 'u' in hec and aux.abajo == None):
+                    hec.append('d')
+                if('u' in hec and 'r' in hec and 'd' in hec and aux.derecha == None):
+                    hec.append('l')
+                if('l' in hec and 'u' in hec and 'd' in hec and aux.izquierda == None):
+                    hec.append('r')
+            if('l' in hec and 'r' in hec and 'u' in hec and 'd' in hec):
+                aux = inicio
+                muvs = ['e']
+                if self.filas.primero.acceso != None:
+                    auxo = self.filas.primero.acceso
+                    while auxo != None:
+                        auxi = auxo
+                        while auxi != None:
+                            if(auxi.caracter == 'W'):
+                                auxi.setCaracter(' ')
+                                print('borrando')
+                            auxi = auxi.derecha
+                        auxo = auxo.abajo    
+                hec = []
+            if(aux.abajo == fin or aux.arriba == fin or aux.derecha == fin or aux.izquierda == fin):
+                print('--------------------------------------------------------------------------------')
+                print('De locos llegamos a la meta')
+                print(muvs)
+                print('--------------------------------------------------------------------------------')
+                return 
+            print(muvs)
+            print(hec)
+        
+    def quitarW(self):
+        if self.filas.primero.acceso != None:
+            auxo = self.filas.primero.acceso
+            while auxo != None:
+                auxi = auxo
+                while auxi != None:
+                    if(auxi.caracter == 'W'):
+                        auxi.setCaracter(' ')
+                    auxi = auxi.derecha
+                auxo = auxo.abajo 
+            return   
+    
     def insert(self, pos_x, pos_y, caracter):
         nuevo = Nodo_Interno(pos_x, pos_y, caracter) # se crea nodo interno
         # --- lo prinero sera buscar si ya existen los encabezados en la matriz
@@ -392,6 +491,128 @@ class MatrizDispersa():
             grafo.write(contenido)
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
+
+
+    def graficarRecorrido(self,nombre):
+        contenido = '''digraph G{
+    node[shape=box, width=0.7, height=0.7, fontname="Arial", fillcolor="white", style=filled]
+    edge[style = "bold"]
+    node[label = "''' + str(nombre) +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
+        contenido += '''label = "{}" \nfontname="Arial Black" \nfontsize="25pt" \n
+                    \n'''.format('\nMATRIZ '+str(nombre).upper())
+                    
+
+
+        # --graficar nodos ENCABEZADO
+        # --graficar nodos fila
+        pivote = self.filas.primero
+        posx = 0
+        while pivote != None:
+            contenido += '\n\tnode[label = "F{}" fillcolor="azure3" pos="-1,-{}!" shape=box]x{};'.format(pivote.id, 
+            posx, pivote.id)
+            pivote = pivote.siguiente
+            posx += 1
+        pivote = self.filas.primero
+        while pivote.siguiente != None:
+            contenido += '\n\tx{}->x{};'.format(pivote.id, pivote.siguiente.id)
+            contenido += '\n\tx{}->x{}[dir=back];'.format(pivote.id, pivote.siguiente.id)
+            pivote = pivote.siguiente
+        contenido += '\n\traiz->x{};'.format(self.filas.primero.id)
+
+        # --graficar nodos columna
+        pivotey = self.columnas.primero
+        posy = 0
+        while pivotey != None:
+            contenido += '\n\tnode[label = "C{}" fillcolor="azure3" pos = "{},1!" shape=box]y{};'.format(pivotey.id, 
+            posy, pivotey.id)
+            pivotey = pivotey.siguiente
+            posy += 1
+        pivotey = self.columnas.primero
+        while pivotey.siguiente != None:
+            contenido += '\n\ty{}->y{};'.format(pivotey.id, pivotey.siguiente.id)
+            contenido += '\n\ty{}->y{}[dir=back];'.format(pivotey.id, pivotey.siguiente.id)
+            pivotey = pivotey.siguiente
+        contenido += '\n\traiz->y{};'.format(self.columnas.primero.id)
+
+        #ya con las cabeceras graficadas, lo siguiente es los nodos internos, o nodosCelda
+        pivote = self.filas.primero
+        posx = 0
+        while pivote != None:
+            pivote_celda : Nodo_Interno = pivote.acceso
+            while pivote_celda != None:
+                # --- buscamos posy
+                pivotey = self.columnas.primero
+                posy_celda = 0
+                while pivotey != None:
+                    if pivotey.id == pivote_celda.coordenadaY: break
+                    posy_celda += 1
+                    pivotey = pivotey.siguiente
+                if pivote_celda.caracter == '*':
+                    contenido += '\n\tnode[label="*" fillcolor="black" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'E':
+                    contenido += '\n\tnode[label="E" fillcolor="green" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'R':
+                    contenido += '\n\tnode[label="R" fillcolor="gray" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'C':
+                    contenido += '\n\tnode[label="C" fillcolor="cyan" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'M':
+                    contenido += '\n\tnode[label="M" fillcolor="red" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'W':
+                    contenido += '\n\tnode[label=" " fillcolor="yellow" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                else:
+                    contenido += '\n\tnode[label=" " fillcolor="white" pos="{},-{}!" shape=box]i{}_{};'.format( # pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    ) 
+                pivote_celda = pivote_celda.derecha
+            
+            pivote_celda = pivote.acceso
+            while pivote_celda != None:
+                if pivote_celda.derecha != None:
+                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.derecha.coordenadaX, pivote_celda.derecha.coordenadaY)
+                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.derecha.coordenadaX, pivote_celda.derecha.coordenadaY)
+                pivote_celda = pivote_celda.derecha
+        
+            contenido += '\n\tx{}->i{}_{};'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            contenido += '\n\tx{}->i{}_{}[dir=back];'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            pivote = pivote.siguiente
+            posx += 1
+        
+        pivote = self.columnas.primero
+        while pivote != None:
+            pivote_celda : Nodo_Interno = pivote.acceso
+            while pivote_celda != None:
+                if pivote_celda.abajo != None:
+                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.abajo.coordenadaX, pivote_celda.abajo.coordenadaY)
+                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.abajo.coordenadaX, pivote_celda.abajo.coordenadaY) 
+                pivote_celda = pivote_celda.abajo
+            contenido += '\n\ty{}->i{}_{};'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            contenido += '\n\ty{}->i{}_{}[dir=back];'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            pivote = pivote.siguiente
+                
+        contenido += '\n}'
+        #--- se genera DOT y se procede a ecjetuar el comando
+        dot = "matriz_{}_dot.txt".format(nombre)
+        with open(dot, 'w') as grafo:
+            grafo.write(contenido)
+        result = "matriz_{}.pdf".format(nombre)
+        os.system("neato -Tpdf " + dot + " -o " + result)
+
 
     def graficarDot(self, nombre):
         #-- lo primero es settear los valores que nos preocupan
