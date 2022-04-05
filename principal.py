@@ -62,6 +62,7 @@ while(opcion != 4):
         CI.mostrar2()
         ciudad = input("Seleccione el numero de ciudad para ver sus misiones: \n")
         ciudadSelect = CI.buscarNodo(ciudad)
+        ciudadSelect.mostrar()
         print('------------------------------------------------------')
         print('Ciudad seleccionada:\n\t'+str(ciudadSelect.getnombre()))
         print('------------------------------------------------------')
@@ -115,7 +116,9 @@ while(opcion != 4):
             intent =(ciudadSelect.casillas.buscarCaminoRecurso(entrada.nodoMis,mision.nodoMis,robot,ciudadSelect.militares))
             if(intent==True):
                 ciudadSelect.casillas.graficarRecorrido('Mision_Completada')
+                webbrowser.open('matriz_Recursos.pdf'.format(ciudadSelect.getnombre()))
             ciudadSelect.casillas.quitarW()
+
 
     elif(opcion == "4"):
         print("Adios")
