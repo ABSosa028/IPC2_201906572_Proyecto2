@@ -84,42 +84,42 @@ class MatrizDispersa():
             return EntradasDisponibles
 
     def mderecha(self, nodo):
-        if(nodo.derecha.caracter != 'E' and nodo.derecha.caracter != 'C'):
+        if(nodo.derecha.caracter != 'E' and nodo.derecha.caracter != 'C' and nodo.derecha.caracter != 'M'):
             nodo.derecha.setCaracter('W')
         return 
     
     def mizquierda(self, nodo):
-        if(nodo.izquierda.caracter != 'E' and nodo.izquierda.caracter != 'C'):
+        if(nodo.izquierda.caracter != 'E' and nodo.izquierda.caracter != 'C' and nodo.izquierda.caracter != 'M'):
             nodo.izquierda.setCaracter('W')
         return
 
     def mabajo(self, nodo):
-        if(nodo.abajo.caracter != 'E' and nodo.abajo.caracter != 'C'):
+        if(nodo.abajo.caracter != 'E' and nodo.abajo.caracter != 'C' and nodo.abajo.caracter != 'M'):
             nodo.abajo.setCaracter('W')
         return
     
     def marriba(self, nodo):
-        if(nodo.arriba.caracter != 'E' and nodo.arriba.caracter != 'C'):
+        if(nodo.arriba.caracter != 'E' and nodo.arriba.caracter != 'C' and nodo.arriba.caracter != 'M'):
             nodo.arriba.setCaracter('W')
         return
     
     def rderecha(self, nodo):
-        if(nodo.derecha.caracter != 'E' and nodo.derecha.caracter != 'C'):
+        if(nodo.derecha.caracter != 'E' and nodo.derecha.caracter != 'C' and nodo.derecha.caracter != 'M'):
             nodo.derecha.setCaracter(' ')
         return
     
     def rizquierda(self, nodo):
-        if(nodo.izquierda.caracter != 'E' and nodo.izquierda.caracter != 'C'):
+        if(nodo.izquierda.caracter != 'E' and nodo.izquierda.caracter != 'C' and nodo.izquierda.caracter != 'M'):
             nodo.izquierda.setCaracter(' ')
         return
     
     def rarriba(self, nodo):
-        if(nodo.arriba.caracter != 'E' and nodo.arriba.caracter != 'C'):
+        if(nodo.arriba.caracter != 'E' and nodo.arriba.caracter != 'C' and nodo.arriba.caracter != 'M'):
             nodo.arriba.setCaracter(' ')
         return
     
     def rabajo(self, nodo):
-        if(nodo.abajo.caracter != 'E' and nodo.abajo.caracter != 'C'):
+        if(nodo.abajo.caracter != 'E' and nodo.abajo.caracter != 'C' and nodo.abajo.caracter != 'M'):
             nodo.abajo.setCaracter(' ')   
         return
 
@@ -211,6 +211,7 @@ class MatrizDispersa():
     def buscarCaminoRecurso(self, inicio, fin, robot, milisia):
         aux = inicio
         muvs = ['e']
+        contInt = 0
         pas = ['E',' ','C','M']
         hec = []
         while(inicio.coordenadaX != fin.coordenadaX and inicio.coordenadaY != fin.coordenadaY):
@@ -221,7 +222,7 @@ class MatrizDispersa():
             if(aux.derecha != None and numero ==1 ):
                 if( aux.derecha.caracter in pas):
                     if(aux.derecha.caracter == 'M'):
-                        f = milisia.buscarNodo(aux.derecha.getCoordenadaX(), aux.derecha.getCoordenadaY())
+                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
                         if(f != None):
                             if(int(f.getPoder) < int(robot.getPoder())):
                                 nP=int(robot.getPoder)-int(f.getPoder)
@@ -230,6 +231,7 @@ class MatrizDispersa():
                                 muvs.append('r')
                                 aux = aux.derecha
                                 hec = []
+                                continue
                     self.mderecha(aux)
                     muvs.append('r')
                     aux = aux.derecha
@@ -238,6 +240,17 @@ class MatrizDispersa():
                     hec.append('r')
             elif(aux.arriba != None and numero ==2):
                 if( aux.arriba.caracter in pas ):
+                    if(aux.arriba.caracter == 'M'):
+                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
+                        if(f != None):
+                            if(int(f.getPoder) < int(robot.getPoder())):
+                                nP=int(robot.getPoder)-int(f.getPoder)
+                                f.setPoder(nP)
+                                self.mderecha(aux)
+                                muvs.append('r')
+                                aux = aux.derecha
+                                hec = []
+                                continue
                     muvs.append('u')
                     self.marriba(aux)
                     hec = []
@@ -246,6 +259,17 @@ class MatrizDispersa():
                     hec.append('u')
             elif(aux.abajo != None and numero ==3):
                 if( aux.abajo.caracter in pas ):
+                    if(aux.abajo.caracter == 'M'):
+                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
+                        if(f != None):
+                            if(int(f.getPoder) < int(robot.getPoder())):
+                                nP=int(robot.getPoder)-int(f.getPoder)
+                                f.setPoder(nP)
+                                self.mderecha(aux)
+                                muvs.append('r')
+                                aux = aux.derecha
+                                hec = []
+                                continue
                     self.mabajo(aux)
                     hec = []
                     aux = aux.abajo
@@ -254,6 +278,17 @@ class MatrizDispersa():
                     hec.append('d') 
             elif(aux.izquierda != None and numero ==4):
                 if( aux.izquierda.caracter in pas ):
+                    if(aux.izquierda.caracter == 'M'):
+                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
+                        if(f != None):
+                            if(int(f.getPoder) < int(robot.getPoder())):
+                                nP=int(robot.getPoder)-int(f.getPoder)
+                                f.setPoder(nP)
+                                self.mderecha(aux)
+                                muvs.append('r')
+                                aux = aux.derecha
+                                hec = []
+                                continue
                     muvs.append('l')
                     hec = []
                     self.mizquierda(aux)
@@ -269,6 +304,7 @@ class MatrizDispersa():
                 if('l' in hec and 'u' in hec and 'd' in hec and aux.izquierda == None):
                     hec.append('r')
             if('l' in hec and 'r' in hec and 'u' in hec and 'd' in hec):
+                contInt +=1
                 aux = inicio
                 muvs = ['e']
                 if self.filas.primero.acceso != None:
@@ -278,18 +314,26 @@ class MatrizDispersa():
                         while auxi != None:
                             if(auxi.caracter == 'W'):
                                 auxi.setCaracter(' ')
-                                print('borrando')
                             auxi = auxi.derecha
                         auxo = auxo.abajo    
                 hec = []
             if(aux.abajo == fin or aux.arriba == fin or aux.derecha == fin or aux.izquierda == fin):
                 print('--------------------------------------------------------------------------------')
-                print('De locos llegamos a la meta')
-                print(muvs)
+                print('Mision Completada')
+                return True
                 print('--------------------------------------------------------------------------------')
                 return 
-            print(muvs)
-            print(hec)
+            if(contInt > 100):
+                print('--------------------------------------------------------------------------------')
+                print('Mision no posible')
+                print('--------------------------------------------------------------------------------')
+                return False
+            if(len(muvs)>150 or len(hec)>150):
+                print('--------------------------------------------------------------------------------')
+                print('Mision no posible')
+                print('--------------------------------------------------------------------------------')
+                return False
+        return False
         
     def quitarW(self):
         if self.filas.primero.acceso != None:
