@@ -18,10 +18,17 @@ class Milicia():
     def buscarNodo(self, x, y):
         aux = self.primero
         while aux != None:
-            if aux.positionx == x and aux.positiony == y:
+            #input('{}   {}      {}   {}'.format(aux.positionx,y, aux.positiony, x))
+            if int(aux.positionx) == int(y) and int(aux.positiony) == int(x):
                 return aux
             aux = aux.siguiente
         return None
+    
+    def mostrar(self):
+        aux = self.primero
+        while aux != None:
+            aux = aux.siguiente
+        return
     
     
 

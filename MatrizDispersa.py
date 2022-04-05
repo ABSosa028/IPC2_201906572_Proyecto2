@@ -130,12 +130,9 @@ class MatrizDispersa():
         pas = ['E',' ','C','']
         hec = []
         contInt = 0
-        print('intento')
-        
         while((inicio.coordenadaX != fin.coordenadaX) or (inicio.coordenadaY != fin.coordenadaY)):
             numero = int(random.randint(1, 4))
-            #intentar muv
-            
+            #intentar muv 
             if(aux.derecha != None and numero ==1 ):
                 if( aux.derecha.caracter in pas):
                     self.mderecha(aux)
@@ -176,6 +173,24 @@ class MatrizDispersa():
                     hec.append('l')
                 if('l' in hec and 'u' in hec and 'd' in hec and aux.izquierda == None):
                     hec.append('r')
+            if(aux.abajo != None or aux.arriba != None or aux.derecha != None or aux.izquierda != None):
+                    if(aux.arriba != None and aux.caracter not in pas):
+                        hec.append('u')
+                    if(aux.abajo != None and aux.abajo.caracter not in pas ):
+                        hec.append('d')
+                    if(aux.izquierda != None and aux.izquierda.caracter not in pas):
+                        hec.append('l')
+                    if(aux.derecha != None and aux.derecha.caracter not in pas):
+                        hec.append('r')
+            else:
+                if(aux.arriba == None):
+                    hec.append('u')
+                if(aux.abajo == None):
+                    hec.append('d')
+                if(aux.izquierda == None):
+                    hec.append('l')
+                if(aux.derecha == None):
+                    hec.append('r')
             if('l' in hec and 'r' in hec and 'u' in hec and 'd' in hec):
                 contInt +=1
                 aux = inicio
@@ -196,14 +211,31 @@ class MatrizDispersa():
                 return True
                 print('--------------------------------------------------------------------------------')
                 return 
-            if(contInt > 100):
+            if(contInt > 200):
+                print(aux.coordenadaX, aux.coordenadaY)
+                print(muvs)
                 print('--------------------------------------------------------------------------------')
                 print('Mision no posible')
                 print('--------------------------------------------------------------------------------')
                 return False
-            if(len(muvs)>150 or len(hec)>150):
+            if(len(muvs)>250 or len(hec)>250):
+                if ('l' not in hec or 'r' not in hec or 'u' not in hec or 'd' not in hec):
+                    muvs = ['e']
+                    aux = inicio
+                    muvs = ['e']
+                    if self.filas.primero.acceso != None:
+                        auxo = self.filas.primero.acceso
+                        while auxo != None:
+                            auxi = auxo
+                            while auxi != None:
+                                if(auxi.caracter == 'W'):
+                                    auxi.setCaracter(' ')
+                                auxi = auxi.derecha
+                            auxo = auxo.abajo    
+                    hec = []
+                    continue
                 print('--------------------------------------------------------------------------------')
-                print('Mision no posible')
+                print('Mision no posible 2')
                 print('--------------------------------------------------------------------------------')
                 return False
         return False
@@ -214,84 +246,103 @@ class MatrizDispersa():
         contInt = 0
         pas = ['E',' ','C','M']
         hec = []
-        while(inicio.coordenadaX != fin.coordenadaX and inicio.coordenadaY != fin.coordenadaY):
+        vida = int(robot.getPoder())
+        while(inicio.coordenadaX != fin.coordenadaX or inicio.coordenadaY != fin.coordenadaY):
             numero = int(random.randint(1, 4))
-            print(numero)
-            #intentar muv
-            
+
+            #right
             if(aux.derecha != None and numero ==1 ):
                 if( aux.derecha.caracter in pas):
                     if(aux.derecha.caracter == 'M'):
                         f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
                         if(f != None):
-                            if(int(f.getPoder) < int(robot.getPoder())):
-                                nP=int(robot.getPoder)-int(f.getPoder)
-                                f.setPoder(nP)
+                            if(int(f.getPoder()) < vida):
+                                nP = vida-int(f.getPoder())
+                                vida = nP
                                 self.mderecha(aux)
                                 muvs.append('r')
                                 aux = aux.derecha
                                 hec = []
                                 continue
-                    self.mderecha(aux)
-                    muvs.append('r')
-                    aux = aux.derecha
-                    hec = []
+                            else:
+                                hec.append('r')
+                                continue
+                    else:
+                        self.mderecha(aux)
+                        muvs.append('r')
+                        aux = aux.derecha
+                        hec = []
                 else:
                     hec.append('r')
+            #up
             elif(aux.arriba != None and numero ==2):
                 if( aux.arriba.caracter in pas ):
                     if(aux.arriba.caracter == 'M'):
-                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
+                        f = milisia.buscarNodo(aux.arriba.coordenadaX, aux.arriba.coordenadaY)
                         if(f != None):
-                            if(int(f.getPoder) < int(robot.getPoder())):
-                                nP=int(robot.getPoder)-int(f.getPoder)
-                                f.setPoder(nP)
-                                self.mderecha(aux)
-                                muvs.append('r')
-                                aux = aux.derecha
+                            if(int(f.getPoder()) < vida):
+                                nP = vida-int(f.getPoder())
+                                vida = nP
+                                self.marriba(aux)
+                                muvs.append('u')
+                                aux = aux.arriba
                                 hec = []
                                 continue
-                    muvs.append('u')
-                    self.marriba(aux)
-                    hec = []
-                    aux = aux.arriba
+                            else:
+                                hec.append('u')
+                                continue
+                    else:
+                        muvs.append('u')
+                        self.marriba(aux)
+                        hec = []
+                        aux = aux.arriba
                 else:
                     hec.append('u')
+            #down
             elif(aux.abajo != None and numero ==3):
                 if( aux.abajo.caracter in pas ):
                     if(aux.abajo.caracter == 'M'):
-                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
+                        f = milisia.buscarNodo(aux.abajo.coordenadaX, aux.abajo.coordenadaY)
                         if(f != None):
-                            if(int(f.getPoder) < int(robot.getPoder())):
-                                nP=int(robot.getPoder)-int(f.getPoder)
-                                f.setPoder(nP)
-                                self.mderecha(aux)
-                                muvs.append('r')
-                                aux = aux.derecha
+                            if(int(f.getPoder()) < vida):
+                                nP = vida-int(f.getPoder())
+                                vida = nP
+                                self.mabajo(aux)
+                                muvs.append('d')
+                                aux = aux.abajo
                                 hec = []
                                 continue
-                    self.mabajo(aux)
-                    hec = []
-                    aux = aux.abajo
-                    muvs.append('d')
+                            else:
+                                hec.append('d')
+                                continue
+                    else:
+                        self.mabajo(aux)
+                        hec = []
+                        aux = aux.abajo
+                        muvs.append('d')
                 else:
                     hec.append('d') 
+            #left
             elif(aux.izquierda != None and numero ==4):
                 if( aux.izquierda.caracter in pas ):
                     if(aux.izquierda.caracter == 'M'):
-                        f = milisia.buscarNodo(aux.derecha.coordenadaX, aux.derecha.coordenadaY)
+                        f = milisia.buscarNodo(aux.izquierda.coordenadaX, aux.izquierda.coordenadaY)
                         if(f != None):
-                            if(int(f.getPoder) < int(robot.getPoder())):
-                                nP=int(robot.getPoder)-int(f.getPoder)
-                                f.setPoder(nP)
-                                self.mderecha(aux)
-                                muvs.append('r')
-                                aux = aux.derecha
+                            if(int(f.getPoder()) < vida):
+                                nP = vida-int(f.getPoder())
+                                vida = nP
+                                self.mizquierda(aux)
+                                muvs.append('l')
+                                aux = aux.izquierda
                                 hec = []
                                 continue
-                    muvs.append('l')
-                    hec = []
-                    self.mizquierda(aux)
+                            else:
+                                hec.append('l')
+                                continue
+                    else:
+                        muvs.append('l')
+                        hec = []
+                        self.mizquierda(aux)
                 else:
                     hec.append('l')
             if(aux.abajo == None or aux.arriba == None or aux.derecha == None or aux.izquierda == None):
@@ -302,6 +353,24 @@ class MatrizDispersa():
                 if('u' in hec and 'r' in hec and 'd' in hec and aux.derecha == None):
                     hec.append('l')
                 if('l' in hec and 'u' in hec and 'd' in hec and aux.izquierda == None):
+                    hec.append('r')
+            if(aux.abajo != None or aux.arriba != None or aux.derecha != None or aux.izquierda != None):
+                    if(aux.arriba != None and aux.caracter not in pas):
+                        hec.append('u')
+                    if(aux.abajo != None and aux.abajo.caracter not in pas ):
+                        hec.append('d')
+                    if(aux.izquierda != None and aux.izquierda.caracter not in pas):
+                        hec.append('l')
+                    if(aux.derecha != None and aux.derecha.caracter not in pas):
+                        hec.append('r')
+            else:
+                if(aux.arriba == None):
+                    hec.append('u')
+                if(aux.abajo == None):
+                    hec.append('d')
+                if(aux.izquierda == None):
+                    hec.append('l')
+                if(aux.derecha == None):
                     hec.append('r')
             if('l' in hec and 'r' in hec and 'u' in hec and 'd' in hec):
                 contInt +=1
@@ -315,22 +384,41 @@ class MatrizDispersa():
                             if(auxi.caracter == 'W'):
                                 auxi.setCaracter(' ')
                             auxi = auxi.derecha
-                        auxo = auxo.abajo    
+                        auxo = auxo.abajo
+                vida = int(robot.getPoder())    
                 hec = []
             if(aux.abajo == fin or aux.arriba == fin or aux.derecha == fin or aux.izquierda == fin):
                 print('--------------------------------------------------------------------------------')
                 print('Mision Completada')
+                misterRob = ('Robot utilizado: {} tipo:{} capacidad inicial {} capacidad final {}'.format(robot.getNombre(), robot.getTipo(), robot.getPoder(), vida))
+                self.graficarRecorridoRec('Recursos' ,'x:{} y:{} \n {}'.format(fin.coordenadaX,fin.coordenadaY,misterRob ))
                 return True
                 print('--------------------------------------------------------------------------------')
                 return 
-            if(contInt > 100):
+            if(contInt > 200):
                 print('--------------------------------------------------------------------------------')
                 print('Mision no posible')
                 print('--------------------------------------------------------------------------------')
                 return False
-            if(len(muvs)>150 or len(hec)>150):
+            if(len(muvs)>250 or len(hec)>250):
+                if ('l' not in hec or 'r' not in hec or 'u' not in hec or 'd' not in hec):
+                    muvs = ['e']
+                    aux = inicio
+                    muvs = ['e']
+                    if self.filas.primero.acceso != None:
+                        auxo = self.filas.primero.acceso
+                        while auxo != None:
+                            auxi = auxo
+                            while auxi != None:
+                                if(auxi.caracter == 'W'):
+                                    auxi.setCaracter(' ')
+                                auxi = auxi.derecha
+                            auxo = auxo.abajo    
+                    vida = int(robot.getPoder())
+                    hec = []
+                    continue
                 print('--------------------------------------------------------------------------------')
-                print('Mision no posible')
+                print('Mision no posible 2')
                 print('--------------------------------------------------------------------------------')
                 return False
         return False
@@ -538,7 +626,6 @@ class MatrizDispersa():
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
 
-
     def graficarRecorrido(self,nombre):
         contenido = '''digraph G{
     node[shape=box, width=0.7, height=0.7, fontname="Arial", fillcolor="white", style=filled]
@@ -659,7 +746,6 @@ class MatrizDispersa():
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
 
-
     def graficarDot(self, nombre):
         #-- lo primero es settear los valores que nos preocupan
         grafo = 'digraph T{ \nnode[shape=box fontname="Arial" fillcolor="white" style=filled ]'
@@ -778,3 +864,123 @@ class MatrizDispersa():
             f.write(grafo)
         result = "matriz_{}.pdf".format(nombre)
         os.system("dot -Tpdf " + dot + " -o " + result)
+
+    def graficarRecorridoRec(self,nombre, datos):
+        contenido = '''digraph G{
+    node[shape=box, width=0.7, height=0.7, fontname="Arial", fillcolor="white", style=filled]
+    edge[style = "bold"]
+    node[label = "''' + str(nombre) +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
+        contenido += '''label = "{} \n {}" \nfontname="Arial Black" \nfontsize="25pt" \n
+                    \n'''.format(('\nMATRIZ '+str(nombre).upper()),str(datos).upper())
+                    
+
+
+        # --graficar nodos ENCABEZADO
+        # --graficar nodos fila
+        pivote = self.filas.primero
+        posx = 0
+        while pivote != None:
+            contenido += '\n\tnode[label = "F{}" fillcolor="azure3" pos="-1,-{}!" shape=box]x{};'.format(pivote.id, 
+            posx, pivote.id)
+            pivote = pivote.siguiente
+            posx += 1
+        pivote = self.filas.primero
+        while pivote.siguiente != None:
+            contenido += '\n\tx{}->x{};'.format(pivote.id, pivote.siguiente.id)
+            contenido += '\n\tx{}->x{}[dir=back];'.format(pivote.id, pivote.siguiente.id)
+            pivote = pivote.siguiente
+        contenido += '\n\traiz->x{};'.format(self.filas.primero.id)
+
+        # --graficar nodos columna
+        pivotey = self.columnas.primero
+        posy = 0
+        while pivotey != None:
+            contenido += '\n\tnode[label = "C{}" fillcolor="azure3" pos = "{},1!" shape=box]y{};'.format(pivotey.id, 
+            posy, pivotey.id)
+            pivotey = pivotey.siguiente
+            posy += 1
+        pivotey = self.columnas.primero
+        while pivotey.siguiente != None:
+            contenido += '\n\ty{}->y{};'.format(pivotey.id, pivotey.siguiente.id)
+            contenido += '\n\ty{}->y{}[dir=back];'.format(pivotey.id, pivotey.siguiente.id)
+            pivotey = pivotey.siguiente
+        contenido += '\n\traiz->y{};'.format(self.columnas.primero.id)
+
+        #ya con las cabeceras graficadas, lo siguiente es los nodos internos, o nodosCelda
+        pivote = self.filas.primero
+        posx = 0
+        while pivote != None:
+            pivote_celda : Nodo_Interno = pivote.acceso
+            while pivote_celda != None:
+                # --- buscamos posy
+                pivotey = self.columnas.primero
+                posy_celda = 0
+                while pivotey != None:
+                    if pivotey.id == pivote_celda.coordenadaY: break
+                    posy_celda += 1
+                    pivotey = pivotey.siguiente
+                if pivote_celda.caracter == '*':
+                    contenido += '\n\tnode[label="*" fillcolor="black" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'E':
+                    contenido += '\n\tnode[label="E" fillcolor="green" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'R':
+                    contenido += '\n\tnode[label="R" fillcolor="gray" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'C':
+                    contenido += '\n\tnode[label="C" fillcolor="cyan" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'M':
+                    contenido += '\n\tnode[label="M" fillcolor="red" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'W':
+                    contenido += '\n\tnode[label=" " fillcolor="yellow" pos="{},-{}!" shape=box]i{}_{};'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                else:
+                    contenido += '\n\tnode[label=" " fillcolor="white" pos="{},-{}!" shape=box]i{}_{};'.format( # pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    ) 
+                pivote_celda = pivote_celda.derecha
+            
+            pivote_celda = pivote.acceso
+            while pivote_celda != None:
+                if pivote_celda.derecha != None:
+                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.derecha.coordenadaX, pivote_celda.derecha.coordenadaY)
+                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.derecha.coordenadaX, pivote_celda.derecha.coordenadaY)
+                pivote_celda = pivote_celda.derecha
+        
+            contenido += '\n\tx{}->i{}_{};'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            contenido += '\n\tx{}->i{}_{}[dir=back];'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            pivote = pivote.siguiente
+            posx += 1
+        
+        pivote = self.columnas.primero
+        while pivote != None:
+            pivote_celda : Nodo_Interno = pivote.acceso
+            while pivote_celda != None:
+                if pivote_celda.abajo != None:
+                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.abajo.coordenadaX, pivote_celda.abajo.coordenadaY)
+                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.coordenadaX, pivote_celda.coordenadaY,
+                    pivote_celda.abajo.coordenadaX, pivote_celda.abajo.coordenadaY) 
+                pivote_celda = pivote_celda.abajo
+            contenido += '\n\ty{}->i{}_{};'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            contenido += '\n\ty{}->i{}_{}[dir=back];'.format(pivote.id, pivote.acceso.coordenadaX, pivote.acceso.coordenadaY)
+            pivote = pivote.siguiente
+                
+        contenido += '\n}'
+        #--- se genera DOT y se procede a ecjetuar el comando
+        dot = "matriz_{}_dot.txt".format(nombre)
+        with open(dot, 'w') as grafo:
+            grafo.write(contenido)
+        result = "matriz_{}.pdf".format(nombre)
+        os.system("neato -Tpdf " + dot + " -o " + result)

@@ -20,9 +20,9 @@ class Lectura():
         for cuento in configuraciones:
             ListaCiudades = cuento.getElementsByTagName("listaCiudades")
             for ciudad in ListaCiudades:
-                Ml = Mg()
                 Ciudades = ciudad.getElementsByTagName("ciudad")
                 for Ciudad in Ciudades:
+                    Ml = Mg()
                     n = Ciudad.getElementsByTagName("nombre")
                     name = n[0].childNodes[0].data
                     filas = str(n[0].getAttribute("filas"))
@@ -35,7 +35,6 @@ class Lectura():
                         co = unidades.getAttribute("columna")
                         v = unidades.childNodes[0].data
                         newMil = mg(co,f,v)
-
                         Ml.insert(newMil) 
                     coun = 0                                                                                                                    
                     for Fila in rows:

@@ -37,9 +37,6 @@ def load_animation(that,esto):
         else: 
             os.system("clear") 
 
-
-
-
 Lc.lecture('entrada.xml')
 
 menu = """
@@ -103,14 +100,14 @@ while(opcion != 4):
         print('------------------------------------------------------------------')
         print("\n")
         #load_animation('comenzando mision: ',mision.mor().lower())
-        #load_animation('mision completada: ','cargando datos')
-        print(mision.nodoMis.getCaracter())
         if(str(mision.nodoMis.getCaracter())=='C'):
             intent = (ciudadSelect.casillas.buscarCaminoRescate(entrada.nodoMis,mision.nodoMis))
             if(intent==True):
                 ciudadSelect.casillas.graficarRecorrido('Mision_Completada')
             ciudadSelect.casillas.quitarW()
         elif(str(mision.nodoMis.getCaracter())=='R'):
+            ciudadSelect.militares.mostrar()
+            input('jd')
             intent =(ciudadSelect.casillas.buscarCaminoRecurso(entrada.nodoMis,mision.nodoMis,robot,ciudadSelect.militares))
             if(intent==True):
                 ciudadSelect.casillas.graficarRecorrido('Mision_Completada')
