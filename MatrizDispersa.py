@@ -84,44 +84,43 @@ class MatrizDispersa():
             return EntradasDisponibles
 
     def mderecha(self, nodo):
-        if(nodo.derecha.caracter != 'E'):
+        if(nodo.derecha.caracter != 'E' and nodo.derecha.caracter != 'C'):
             nodo.derecha.setCaracter('W')
         return 
     
     def mizquierda(self, nodo):
-        if(nodo.izquierda.caracter != 'E'):
-
+        if(nodo.izquierda.caracter != 'E' and nodo.izquierda.caracter != 'C'):
             nodo.izquierda.setCaracter('W')
         return
 
     def mabajo(self, nodo):
-        if(nodo.abajo.caracter != 'E'):
+        if(nodo.abajo.caracter != 'E' and nodo.abajo.caracter != 'C'):
             nodo.abajo.setCaracter('W')
         return
     
     def marriba(self, nodo):
-        if(nodo.arriba.caracter != 'E'):
+        if(nodo.arriba.caracter != 'E' and nodo.arriba.caracter != 'C'):
             nodo.arriba.setCaracter('W')
         return
     
     def rderecha(self, nodo):
-        if(nodo.caracter != 'E'):
-            nodo.setCaracter(' ')
+        if(nodo.derecha.caracter != 'E' and nodo.derecha.caracter != 'C'):
+            nodo.derecha.setCaracter(' ')
         return
     
     def rizquierda(self, nodo):
-        if(nodo.derecha.caracter != 'E'):
-            nodo.setCaracter(' ')
+        if(nodo.izquierda.caracter != 'E' and nodo.izquierda.caracter != 'C'):
+            nodo.izquierda.setCaracter(' ')
         return
     
     def rarriba(self, nodo):
-        if(nodo.caracter != 'E'):
-            nodo.setCaracter(' ')
+        if(nodo.arriba.caracter != 'E' and nodo.arriba.caracter != 'C'):
+            nodo.arriba.setCaracter(' ')
         return
     
     def rabajo(self, nodo):
-        if(nodo.caracter != 'E'):
-            nodo.setCaracter(' ')   
+        if(nodo.abajo.caracter != 'E' and nodo.abajo.caracter != 'C'):
+            nodo.abajo.setCaracter(' ')   
         return
 
     #buscar camino matriz ortogonal
@@ -131,9 +130,10 @@ class MatrizDispersa():
         pas = ['E',' ','C','']
         hec = []
         contInt = 0
-        while(inicio.coordenadaX != fin.coordenadaX and inicio.coordenadaY != fin.coordenadaY):
+        print('intento')
+        
+        while((inicio.coordenadaX != fin.coordenadaX) or (inicio.coordenadaY != fin.coordenadaY)):
             numero = int(random.randint(1, 4))
-            print(numero)
             #intentar muv
             
             if(aux.derecha != None and numero ==1 ):
@@ -187,24 +187,26 @@ class MatrizDispersa():
                         while auxi != None:
                             if(auxi.caracter == 'W'):
                                 auxi.setCaracter(' ')
-                                print('borrando')
                             auxi = auxi.derecha
                         auxo = auxo.abajo    
                 hec = []
             if(aux.abajo == fin or aux.arriba == fin or aux.derecha == fin or aux.izquierda == fin):
                 print('--------------------------------------------------------------------------------')
-                print('De locos llegamos a la meta')
-                print(muvs)
+                print('Mision Completada')
+                return True
                 print('--------------------------------------------------------------------------------')
                 return 
             if(contInt > 100):
                 print('--------------------------------------------------------------------------------')
                 print('Mision no posible')
-                print(muvs)
                 print('--------------------------------------------------------------------------------')
-                return
-            print(muvs)
-            print(hec)
+                return False
+            if(len(muvs)>150 or len(hec)>150):
+                print('--------------------------------------------------------------------------------')
+                print('Mision no posible')
+                print('--------------------------------------------------------------------------------')
+                return False
+        return False
         
     def buscarCaminoRecurso(self, inicio, fin, robot, milisia):
         aux = inicio

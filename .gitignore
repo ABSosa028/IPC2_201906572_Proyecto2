@@ -1,13 +1,13 @@
-
-
 /files
 /CiudadGotica.txt
 /CiudadGuate.txt
-/__pychache__/
 /matriz_CiudadGotica_dot.txt
 /matriz_CiudadGuate_dot.txt
 /matriz_CiudadGotica.pdf
 /matriz_CiudadGuate.pdf
 /entrada.xml
-
+/matriz_Mision_Completada_dot.txt
 /Reporte.dot
+/matriz_Mision_Completada.pdf
+/Ciudades.pdf
+/__pycache__

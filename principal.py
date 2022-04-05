@@ -12,7 +12,7 @@ def load_animation(that,esto):
         anicount = 0
         counttime = 0        
         i = 0                     
-        while (counttime != 200): 
+        while (counttime != 75): 
             time.sleep(0.075)  
             load_str_list = list(load_str)  
             x = ord(load_str_list[i]) 
@@ -102,14 +102,14 @@ while(opcion != 4):
         print(entrada.mor())
         print('------------------------------------------------------------------')
         print("\n")
-        load_animation('comenzando mision: ',mision.mor().lower())
-        load_animation('mision completada: ','cargando datos')
+        #load_animation('comenzando mision: ',mision.mor().lower())
+        #load_animation('mision completada: ','cargando datos')
         print(mision.nodoMis.getCaracter())
         if(str(mision.nodoMis.getCaracter())=='C'):
-            ciudadSelect.casillas.buscarCaminoRescate(entrada.nodoMis,mision.nodoMis)
+            print(ciudadSelect.casillas.buscarCaminoRescate(entrada.nodoMis,mision.nodoMis))
             ciudadSelect.casillas.graficarRecorrido('Mision_Completada')
             ciudadSelect.casillas.quitarW()
-        else:
+        elif(str(mision.nodoMis.getCaracter())=='R'):
             print('nel')
 
     elif(opcion == "4"):
