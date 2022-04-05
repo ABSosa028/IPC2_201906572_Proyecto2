@@ -90,3 +90,61 @@ class Robots():
                 print('id:{}  {}  {}'.format(aux.codigo,aux.nombre,aux.tipo))
             aux = aux.siguiente
         return
+
+    def mostrartp(self, tp):
+        file = open("Reporte.dot","w")
+        file.write("digraph G {node [fontname=\"Arial\"];node_A [shape=record    label=\"")
+
+        p = self.primero
+        i = 1
+        file.write("{"+'ID')
+        while p != None:
+            if p != None:
+                if(p.getTipo() == tp):
+                    file.write("|")
+            if(p.getTipo() == tp):
+                file.write(str(p.codigo))
+                i = i + 1
+            p = p.siguiente
+            
+        file.write("}|")
+
+        auxi = self.primero
+        file.write("{"+'Nombre')
+        while auxi != None:
+            if auxi != None:
+                if(auxi.getTipo() == tp):
+                    file.write("|")
+            if(auxi.getTipo() == tp):
+                file.write(auxi.getNombre())
+            auxi = auxi.siguiente                
+        file.write("}|")
+
+        auxi = self.primero
+        file.write("{"+'Tipo')
+        while auxi != None:
+            if auxi != None:
+                if(auxi.getTipo() == tp):
+                    file.write("|")  
+            if(auxi.getTipo() == tp):
+                file.write(auxi.getTipo())
+            auxi = auxi.siguiente
+                      
+        file.write("}|")
+
+        auxi = self.primero
+        file.write("{"+'Capacidad Combate')
+        while auxi != None:
+            if auxi != None:
+                if(auxi.getTipo() == tp):
+                    file.write("|")     
+            if(auxi.getTipo() == tp):
+                file.write(auxi.getCapacidad())
+            auxi = auxi.siguiente
+                   
+        file.write("}")
+   
+        file.write("\"];} ")
+        file.close()
+        os.system("dot -Tpdf Reporte.dot -o Robots.pdf")
+        webbrowser.open('Robots.pdf')

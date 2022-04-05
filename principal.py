@@ -3,6 +3,7 @@ from Lectura import Rs, CI
 from Lectura import Lectura as Lc
 from MatrizDispersa import MatrizDispersa
 import sys, os, time
+import webbrowser
 
 
 def load_animation(that,esto):
@@ -77,6 +78,10 @@ while(opcion != 4):
         print("Robots disponibles para esta mision:")
         tipoMis = mision.gettipo()
         Rs.enliztar(tipoMis)
+        if(tipoMis == "R"):
+            Rs.mostrartp('ChapinFighter')
+        elif(tipoMis == "C"):
+            Rs.mostrartp('ChapinRescue')
         print('------------------------------------------------------------------')
         opR = input("Seleccione un robot por su id: \n")
         robot = Rs.buscarNodo(opR)
@@ -107,7 +112,6 @@ while(opcion != 4):
             ciudadSelect.casillas.quitarW()
         elif(str(mision.nodoMis.getCaracter())=='R'):
             ciudadSelect.militares.mostrar()
-            input('jd')
             intent =(ciudadSelect.casillas.buscarCaminoRecurso(entrada.nodoMis,mision.nodoMis,robot,ciudadSelect.militares))
             if(intent==True):
                 ciudadSelect.casillas.graficarRecorrido('Mision_Completada')

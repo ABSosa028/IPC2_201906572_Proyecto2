@@ -11,6 +11,9 @@ class Robot():
     def getPoder(self):
         return self.capacidad
     
+    def getCapacidad(self):
+        return self.capacidad
+    
     def setPoder(self, poder):
         self.capacidad = poder
 
