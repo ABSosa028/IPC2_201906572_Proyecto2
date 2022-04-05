@@ -7,13 +7,19 @@ from Ciudad import Ciudad as Ci
 from xml.dom import minidom 
 from AreaCiudad import AreaCiudad as ac
 from Robots import Robots as Rbs
+from tkinter import filedialog
 from MatrizDispersa import MatrizDispersa
+import os, sys
 
+from tkinter import *
 
 
 Rs = Rbs()
 CI = Cis()
 class Lectura():
+
+    
+
     def lecture(nme):
         doc = minidom.parse(nme)
         configuraciones = doc.getElementsByTagName("configuracion")
@@ -87,4 +93,5 @@ class Lectura():
                     rbot = Rb(str(cod), names, tipo, str(capacidad), 1)
                     Rs.insertar(rbot)
                     cod += 1
+        print('Archivo leido correctamente')
 

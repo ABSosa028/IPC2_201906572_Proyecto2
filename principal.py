@@ -4,6 +4,11 @@ from Lectura import Lectura as Lc
 from MatrizDispersa import MatrizDispersa
 import sys, os, time
 import webbrowser
+from tkinter import *
+from tkinter import filedialog as fd
+
+
+
 
 
 def load_animation(that,esto):
@@ -38,9 +43,10 @@ def load_animation(that,esto):
         else: 
             os.system("clear") 
 
-Lc.lecture('entrada.xml')
+
 
 menu = """
+c. Cargar Archivo
 1. Mostrar Ciudades
 2. Mostrar Robots
 3. Misión
@@ -50,14 +56,31 @@ opcion=0
 while(opcion != 4):
     print(menu)
     opcion = input("Ingrese una opción: \n")
-    if(opcion == "1"):
+    if(opcion == "c" or opcion == "C"):
+        print('seleccione un archivo de entrada')
+        filename = fd.askopenfilename()
+        print(filename)
+        Lc.lecture(filename)
+    elif(opcion == "1"):
+        if(CI.cabecera == None):
+            print("\nNo hay ciudades cargadas")
+            input('presione enter para continuar')
+            continue
         CI.mostrar()
         CI.mostrar2()
     elif(opcion == "2"):
+        if(CI.cabecera == None):
+            print("\nNo hay ciudades cargadas")
+            input('presione enter para continuar')
+            continue
         Rs.mostrar()
         Rs.mostrar2()
     elif(opcion == "3"):
-        print("Misiónes disponibles:")
+        if(CI.cabecera == None):
+            print("\nNo hay ciudades cargadas")
+            input('presione enter para continuar')
+            continue
+        print("\n \nMisiónes disponibles:")
         CI.enliztar()
         CI.mostrar2()
         ciudad = input("Seleccione el numero de ciudad para ver sus misiones: \n")
@@ -123,14 +146,6 @@ while(opcion != 4):
     elif(opcion == "4"):
         print("Adios")
         break
-
-
-
-  
-
-
-
-
 
 
 

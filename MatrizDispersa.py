@@ -212,8 +212,6 @@ class MatrizDispersa():
                 print('--------------------------------------------------------------------------------')
                 return 
             if(contInt > 200):
-                print(aux.coordenadaX, aux.coordenadaY)
-                print(muvs)
                 print('--------------------------------------------------------------------------------')
                 print('Mision no posible')
                 print('--------------------------------------------------------------------------------')
@@ -235,7 +233,7 @@ class MatrizDispersa():
                     hec = []
                     continue
                 print('--------------------------------------------------------------------------------')
-                print('Mision no posible 2')
+                print('Mision no posible ')
                 print('--------------------------------------------------------------------------------')
                 return False
         return False
