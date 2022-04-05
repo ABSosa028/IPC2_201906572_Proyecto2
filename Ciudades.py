@@ -7,7 +7,7 @@ class Ciudades():
         self.cabecera = None
 
     def buscarNodo(self, id):
-        yy = 0
+        yy = 1
         aux = self.cabecera
         while aux != None:
             if(yy == int(id)):
@@ -66,7 +66,7 @@ class Ciudades():
         return
 
     def enliztar(self):
-        yy= 0
+        yy= 1
         aux = self.cabecera
         while aux != None:
             print(str(yy)+" "+aux.nombre)
